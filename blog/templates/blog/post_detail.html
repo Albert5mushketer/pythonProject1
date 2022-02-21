@@ -1,3 +1,4 @@
+
 {% extends 'blog/base.html' %}
 
 {% block content %}
@@ -11,6 +12,9 @@
             <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
         {% endif %}
         <h1>{{ post.title }}</h1>
+        {% if post.image %}
+            <img src="{{ MEDIA_URL }}{{ post.image.url }}">
+        {% endif %}
         <p align="justify">{{ post.text|linebreaksbr }}</p>
     </div>
 {% endblock %}

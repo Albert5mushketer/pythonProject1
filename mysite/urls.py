@@ -15,7 +15,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.template.context_processors import static, media
+from django.template.defaulttags import url
 from django.urls import path, include
+
+from mysite import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
