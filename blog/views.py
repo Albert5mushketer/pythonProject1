@@ -1,11 +1,13 @@
-from .forms import PostForm
+
 from django.utils import timezone
-from .models import Post
 from django.shortcuts import render, get_object_or_404, redirect
+
+from blog.forms import PostForm
+from blog.models import Post
 
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
@@ -20,6 +22,7 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            post.image = "static/media"
             post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
@@ -45,3 +48,7 @@ def post_edit(request, pk):
 
 def contacts(request):
     return render(request, 'blog/contacts.html')
+
+
+def about(request):
+    return render(request, 'blog/about.html')
